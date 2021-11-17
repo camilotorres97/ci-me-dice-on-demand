@@ -32,19 +32,5 @@ jobs:
           python3 -m pytest -v tests/test_dice.py
           flask run
   
-  notify:
-    jobs:
-      name: Notifying via slack
-      needs: [ build ]
-      steps:
-        uses: abinoda/slack-action@master
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        with:
-          args: "Todo ok"    
-
-
-      ##Agrego esto para hacer un commit
-
-
+  
 
