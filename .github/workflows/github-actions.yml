@@ -30,7 +30,7 @@ jobs:
           python3 -m venv venv
           venv/bin/activate
           python3 -m pytest -v tests/test_dice.py
-        if: success()
+      - if: success()
         id: slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
