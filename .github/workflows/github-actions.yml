@@ -1,43 +1,49 @@
-name: github-actions
+name: github-python-actions
 on: 
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
-    #steps:
-    # name: installing requirements
-      uses: py-actions/py-dependency-install@v2
-      with:
-        path: "./requirements.txt"
+    runs-on: ubuntu-latest
 
-    # name: linking with heroku
-      uses: actions/checkout@v2
-      uses: akhileshns/heroku-deploy@v3.12.12 
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: knire-ci-me-dice-on-demand
-        heroku_email: "daniel.naranjo1999@gmail.com"
-
-    #Run unit test
-    #name: unit test
-      run: |
-        python3 -m venv venv
-        venv\Scripts\activate.bat
-        python3 -m pytest -v tests/test_dice.py
-        flask run
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: installing requirements
+      - uses: py-actions/py-dependency-install@v2      
+        with:
+          path: "./requirements.txt"
+      - name: linking with heroku
+      - uses: actions/checkout@v2
+        uses: akhileshns/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: knire-ci-me-dice-on-demand
+          heroku_email: "daniel.naranjo1999@gmail.com"
+      - name: unit test
+        run: |
+          python3 -m venv venv
+          venv\Scripts\activate.bat
+          python3 -m pytest -v tests/test_dice.py
+          flask run
   
   notify:
-    name: Notifying via slack
-    needs: [ build ]
     steps:
-      uses: abinoda/slack-action@master
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      with:
-        args: "Todo ok"
-      
-      if: success()
+      name: Notifying via slack
+      needs: [ build ]
+      steps:
+        uses: abinoda/slack-action@master
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          args: "Todo ok"    
+
 
       ##Agrego esto para hacer un commit
 
