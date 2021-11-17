@@ -30,7 +30,15 @@ jobs:
           python3 -m venv venv
           venv/bin/activate
           python3 -m pytest -v tests/test_dice.py
-          
-  
-  
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: build 
+    
+    steps:
+      uses: abinoda/slack-action@master
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      with:
+        args: "Todo ok"    
 
