@@ -44,7 +44,7 @@ flask run
 
 6. Go to the URL provided by the app (i.e. `http://localhost:5000`)
 
-# Usage
+# :rocket: Usage
 
 1. First off, enter the number of sides of your dice. (Some games might require you to use 20-sided dice)
 2. Now, click on the `roll` button!
