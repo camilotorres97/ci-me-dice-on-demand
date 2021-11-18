@@ -1,7 +1,7 @@
 name: github-python-actions
 on: 
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -56,4 +56,3 @@ jobs:
           channel_id: C02MNT1KCBF
           status: FAILED
           color: danger
-        
