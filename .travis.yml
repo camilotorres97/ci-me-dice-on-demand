@@ -3,12 +3,17 @@ branches:
   - main
 language: python
 python:
-  - "3.9"
-# Install dependencies
+- '3.9'
 install:
-  - pip install -r requirements.txt
-
+- pip install -r requirements.txt
 jobs:
   include:
-    - stage: Test with Pytest
-      script: python3 -m pytest -v tests/test_dice.py
+  - stage: Test with Pytest
+    script: python3 -m pytest -v tests/test_dice.py
+  - stage: Deploy to Staging
+    script: skip
+    deploy:
+      provider: heroku
+      api_key:
+        secure: CiutulbFQ+QHv5MYJHyChgBQZSJBZ1KsASLlUlVbJ1XdWu12cF0bktkbc++OtOevuS2k3B+ixMFndbgbUG8WblLtQAFr2MeLyxRfIlKLXQoIKby+/Pt0PWviWKpU22rWKWxpsRyGuKviKuu0rKlB/qqN1H50j6mxNE4a7D4tPGKCULpqNXqhN7M7a3LTJwPsFNdUAyEdGkQgYV+OS2QE+hUDsHL4rmgSC3M+KNwqn/bqM736nX4zvJMNIqlJD7cmWv5bSC9tZU3hnqCzx9cXLH9kfHwBO1oZfJXVHdM/ZS991uGiQ4LldjW8RqU5YlumVf1OM8ohTropr42U/fCC+Y0Xg9C8ja0f0qPv7SW1oeh2/CWJZyObLqVTapQu2YkY82ZQTFLU2sFe8dIARRU/LbcXXsUZ/fbnf+MmSrF33DMu6hXZ+Nhw5dwInhpUmYh6l35erZd+ra/WSnx4T8+JZV8sLj1apJtWJajw6w0tHSDbqreIR2gX1owkB4EO88OTj6egAg7DJ2agOfE8hzqJOfqe0ty29XE9fs1G8jTsA3u8I9k0e6TdM9L3r8n8xfu8ErmQstrro9e0K1c2HOLzVGAk3BgIlS4gAN44Yhos/u9dp6NFjkzdMQ3id8iibXlSO3gdJFPwULYWIbxSR8yPowMJNNHVs1nn4E49UJsHsBo=
+      app: ci-dice-on-demand-staging
