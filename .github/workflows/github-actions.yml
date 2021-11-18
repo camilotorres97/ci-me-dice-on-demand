@@ -19,7 +19,7 @@ jobs:
         uses: py-actions/py-dependency-install@v2      
         with:
           path: "./requirements.txt"
-      - name: linking with heroku -staging
+      - name: deploying with heroku -staging
         uses: akhileshns/heroku-deploy@v3.12.12 
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -32,11 +32,11 @@ jobs:
           python3 -m pytest -v tests/test_dice.py
       - name: deploy to prod with heroku
         if: success()
-          uses: akhileshns/heroku-deploy@v3.12.12 
-          with:
-            heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-            heroku_app_name: knire-ci-me-dice-on-demand-prd
-            heroku_email: "daniel.naranjo1999@gmail.com"      
+        uses: akhileshns/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: knire-ci-me-dice-on-demand-prd
+          heroku_email: "daniel.naranjo1999@gmail.com"      
       - name: notify success with slack
         if: success()
         env:
